@@ -45,8 +45,8 @@ There are some standard files, there deserves a section of their own. These are:
 
 ## Toolset
 Key tools to be used in this core framework are:    
-- [ ] **Java** (As the core programming language)    
-- [ ] **Maven** (for automatic dependency management)    
+- [X] **Java** (As the core programming language)    
+- [X] **Maven** (for automatic dependency management)    
 - [ ] **Junit 5** (for assertions)   
 - [ ] **Slf4J/Log4J** (for logging interface and as a logging library)   
 - [ ] **Typesafe** (for application configuration for multiple test environments)    
@@ -55,7 +55,7 @@ Key tools to be used in this core framework are:
 - [x] **Github** (for version control)   
 - [ ] **Github actions** (for continuous integration)    
 - [ ] **Faker library** (for generating random test data for different locales - germany, france, netherlands, english)  
-- [ ] **Slack integration** (for giving notifications on pull requests)   
+- [X] **Slack integration** (for giving notifications on pull requests)   
 - [ ] **Elastic and Kibana** (for test monitoring)   
 - [ ] **Docker** (for automating test framework's environment)   
 - [ ] **Powershell or bash Script** (for automating building test environment)   
