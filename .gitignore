@@ -4,5 +4,5 @@
 # Ignore all uninterested files
 notes.txt
 
-# Ignore target directory
+# Ignore target
 target
