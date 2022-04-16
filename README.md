@@ -88,4 +88,3 @@ Key tools that we will use in other frameworks, that will all extend this core f
 - [manage multiple github accounts](https://www.freecodecamp.org/news/manage-multiple-github-accounts-the-ssh-way-2dadc30ccaca/)
 - [manage multiple git configs for different accounts](https://www.freecodecamp.org/news/how-to-handle-multiple-git-configurations-in-one-machine/)
 - [logout/login in multiple accounts](https://medium.com/@devesu/how-to-logout-from-git-in-windows-e17c66fe9ca8)
-- test line
