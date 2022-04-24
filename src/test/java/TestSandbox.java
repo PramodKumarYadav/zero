@@ -1,4 +1,5 @@
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,11 +14,13 @@ public class TestSandbox {
         assertTrue(true, "true is true");
     }
 
+    @Tag("failing")
     @Test
     void assertThatADayIsADay() {
         assertEquals("day", "night", "true is true");
     }
 
+    @Tag("flaky")
     @Test
     void createAFlakyTest() {
         long currentTimeStamp = System.currentTimeMillis();
