@@ -27,6 +27,9 @@ jobs:
     - name: Test with Maven
       run: mvn -DexcludedGroups="flaky | failing" -B package --file pom.xml
 
+    - name: Find absolute path of test reports
+      run: realpath TEST-TestSandbox.xml
+
     - name: Test Summary
       uses: test-summary/action@v1
       with:
