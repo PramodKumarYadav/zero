@@ -43,5 +43,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-summary
-        path: test-summary.md
+        path: /home/runner/work/zero/zero/test-summary.md
       if: always()
