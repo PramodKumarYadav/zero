@@ -34,6 +34,7 @@ jobs:
       uses: test-summary/action@v1
       with:
         paths: '/home/runner/work/zero/zero/TEST-*.xml'
+        output: "test/results/test-summary.md"
       if: always()
 
     - name: Find absolute path of test-summary.md
@@ -43,5 +44,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-summary
-        path: '/home/runner/work/zero/zero/test-summary.md'
+        path: "test/results/test-summary.md"
       if: always()
