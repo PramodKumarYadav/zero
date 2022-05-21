@@ -26,23 +26,3 @@ jobs:
 
     - name: Test with Maven
       run: mvn -DexcludedGroups="flaky | failing" -B package --file pom.xml
-
-    - name: Find absolute path of test reports
-      run: realpath "TEST-*.xml"
-
-    - name: Test Summary
-      uses: test-summary/action@v1
-      with:
-        paths: '/home/runner/work/zero/zero/TEST-*.xml'
-        output: "/test-summary.md"
-      if: always()
-
-    - name: Find absolute path of test-summary.md
-      run: realpath test-summary.md
-
-    - name: Upload test summary
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-summary
-        path: "/test-summary.md"
-      if: always()
