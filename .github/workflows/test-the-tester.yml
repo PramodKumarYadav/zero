@@ -33,7 +33,7 @@ jobs:
     - name: Test Summary
       uses: test-summary/action@v1
       with:
-        paths: "/home/runner/work/zero/zero/target/surefire-reports/TEST-*.xml"
+        paths: "/home/runner/work/zero/zero/TEST-*.xml"
       if: always()
 
     - name: Upload test summary
