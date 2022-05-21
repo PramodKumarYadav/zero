@@ -33,7 +33,7 @@ jobs:
     - name: Test Summary
       uses: test-summary/action@v1
       with:
-        paths: '/home/runner/work/zero/zero/TEST-TestSandbox.xml'
+        paths: '/TEST-TestSandbox.xml'
       if: always()
 
     - name: Find absolute path of test-summary.md
@@ -43,5 +43,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-summary
-        path: '/home/runner/work/zero/zero/test-summary.md'
+        path: '/test-summary.md'
       if: always()
