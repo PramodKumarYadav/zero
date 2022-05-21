@@ -36,6 +36,9 @@ jobs:
         paths: "/home/runner/work/zero/zero/TEST-*.xml"
       if: always()
 
+    - name: Find absolute path of test-summary.md
+      run: realpath test-summary.md
+
     - name: Upload test summary
       uses: actions/upload-artifact@v3
       with:
