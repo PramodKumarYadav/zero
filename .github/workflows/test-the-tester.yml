@@ -30,5 +30,12 @@ jobs:
     - name: Test Summary
       uses: test-summary/action@v1
       with:
-        paths: "target/**/TEST-*.xml"
+        paths: "target/surefire-reports/TEST-*.xml"
+      if: always()
+
+    - name: Upload test summary
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-summary
+        path: test-summary.md
       if: always()
