@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 public class TestSandbox {
-    Config CONFIG = TestEnvFactory.getInstance().getConfig();
+    private static final Config CONFIG = TestEnvFactory.getInstance().getConfig();
 
     @Test
     void assertThatWeCanGetUserConfig() {
