@@ -4,6 +4,8 @@ import com.typesafe.config.ConfigFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Slf4j
 public class TestEnvFactory {
@@ -29,10 +31,13 @@ public class TestEnvFactory {
 
         TestEnv testEnv = config.getEnum(TestEnv.class, "TEST_ENV");
 
-        String testEnvDirPath = String.format("src/main/resources/%s", testEnv);
-        File testEnvDir = new File(testEnvDirPath);
+        Path path = Paths.get("src", "main", "resources", String.valueOf(testEnv));
+//        String testEnvDirPath = String.format("src/main/resources/%s", testEnv);
+        File testEnvDir = new File(String.valueOf(path));
         for (File file : testEnvDir.listFiles()) {
-            Config childConfig = ConfigFactory.load(String.format("%s/%s", testEnv, file.getName()));
+            Path envFilePath = Paths.get(String.valueOf(testEnv), file.getName());
+            Config childConfig = ConfigFactory.load(String.valueOf(envFilePath));
+//            Config childConfig = ConfigFactory.load(String.format("%s/%s", testEnv, file.getName()));
             config = config.withFallback(childConfig);
         }
 
