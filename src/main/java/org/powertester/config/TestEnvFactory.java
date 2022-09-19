@@ -34,12 +34,12 @@ public class TestEnvFactory {
             TestEnv testEnv = config.getEnum(TestEnv.class, "TEST_ENV");
             System.out.println("TestEnv: " + testEnv);
 
-            Path path = Paths.get("src", "main", "resources", String.valueOf(testEnv));
+            Path path = Paths.get("src", "main", "resources", String.valueOf(testEnv).toLowerCase());
 //        String testEnvDirPath = String.format("src/main/resources/%s", testEnv);
             File testEnvDir = new File(String.valueOf(path));
             System.out.println("directory path: " + testEnvDir.getAbsolutePath());
             for (File file : testEnvDir.listFiles()) {
-                Path envFilePath = Paths.get(String.valueOf(testEnv), file.getName());
+                Path envFilePath = Paths.get(String.valueOf(testEnv).toLowerCase(), file.getName());
                 Config childConfig = ConfigFactory.load(String.valueOf(envFilePath));
 //            Config childConfig = ConfigFactory.load(String.format("%s/%s", testEnv, file.getName()));
                 config = config.withFallback(childConfig);
