@@ -31,6 +31,7 @@ public class TestEnvFactory {
             TestEnv testEnv = config.getEnum(TestEnv.class, "TEST_ENV");
 
             String path = String.format("src/main/resources/%s", testEnv);
+            log.info("path: {}", path);
             File testEnvDir = new File(String.valueOf(path));
             for (File file : testEnvDir.listFiles()) {
                 Config childConfig = ConfigFactory.load(String.format("%s/%s", testEnv, file.getName()));
