@@ -1,13 +1,31 @@
 
+import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.powertester.config.TestEnvFactory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 public class TestSandbox {
+    Config CONFIG = TestEnvFactory.getInstance().getConfig();
+
+    @Test
+    void assertThatWeCanGetUserConfig() {
+        log.info(CONFIG.getString("TEST_ENV"));
+        log.info(CONFIG.getString("CREATE_EMPLOYEE_ENDPOINT"));
+        log.info(CONFIG.getString("ADMIN_NAME"));
+
+        Boolean flag = CONFIG.getBoolean("TOGGLE");
+        log.info(String.valueOf(flag));
+
+        log.info(String.valueOf(CONFIG.getInt("NR_OF_USERS")));
+        log.info(String.valueOf(CONFIG.getDouble("PRICE")));
+        log.info(CONFIG.getString("USER_NAME"));
+    }
+    
     /**
      * a very basic test
      */
