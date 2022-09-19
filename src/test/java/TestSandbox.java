@@ -1,6 +1,7 @@
 
 import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.powertester.config.TestEnvFactory;
@@ -11,12 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Slf4j
 public class TestSandbox {
 
-
-    @Test
+    @RepeatedTest(10)
     void assertThatWeCanGetUserConfig() {
         final Config CONFIG = TestEnvFactory.getInstance().getConfig();
 
-        log.info(CONFIG.getString("TEST_ENV"));
+        log.info(TestEnvFactory.getInstance().getConfig().getString("TEST_ENV"));
         log.info(CONFIG.getString("CREATE_EMPLOYEE_ENDPOINT"));
         log.info(CONFIG.getString("ADMIN_NAME"));
 

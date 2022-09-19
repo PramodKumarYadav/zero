@@ -1,14 +1,17 @@
 package org.powertester.config;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
+@Slf4j
 public class TestEnvFactory {
     private static final TestEnvFactory UNIQUE_INSTANCE = new TestEnvFactory();
+    private Config config;
 
     private TestEnvFactory() {
-        // Do not want anyone to call this constructor.
+        config = setConfig();
     }
 
     public static TestEnvFactory getInstance() {
@@ -16,8 +19,13 @@ public class TestEnvFactory {
     }
 
     public Config getConfig() {
+        return config;
+    }
+
+    private Config setConfig() {
+        log.info("setConfig called");
         // Standard config load behavior: https://github.com/lightbend/config#standard-behavior
-        Config config = ConfigFactory.load();
+        config = ConfigFactory.load();
 
         TestEnv testEnv = config.getEnum(TestEnv.class, "TEST_ENV");
 
