@@ -25,7 +25,7 @@ public class TestSandbox {
         log.info(String.valueOf(CONFIG.getDouble("PRICE")));
         log.info(CONFIG.getString("USER_NAME"));
     }
-    
+
     /**
      * a very basic test
      */
