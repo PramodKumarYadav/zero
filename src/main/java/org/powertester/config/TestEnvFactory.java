@@ -25,22 +25,28 @@ public class TestEnvFactory {
     }
 
     private Config setConfig() {
-        log.info("setConfig called");
-        // Standard config load behavior: https://github.com/lightbend/config#standard-behavior
-        config = ConfigFactory.load();
+        try{
 
-        TestEnv testEnv = config.getEnum(TestEnv.class, "TEST_ENV");
+            log.info("setConfig called");
+            // Standard config load behavior: https://github.com/lightbend/config#standard-behavior
+            config = ConfigFactory.load();
 
-        Path path = Paths.get("src", "main", "resources", String.valueOf(testEnv));
+            TestEnv testEnv = config.getEnum(TestEnv.class, "TEST_ENV");
+
+            Path path = Paths.get("src", "main", "resources", String.valueOf(testEnv));
 //        String testEnvDirPath = String.format("src/main/resources/%s", testEnv);
-        File testEnvDir = new File(String.valueOf(path));
-        for (File file : testEnvDir.listFiles()) {
-            Path envFilePath = Paths.get(String.valueOf(testEnv), file.getName());
-            Config childConfig = ConfigFactory.load(String.valueOf(envFilePath));
+            File testEnvDir = new File(String.valueOf(path));
+            for (File file : testEnvDir.listFiles()) {
+                Path envFilePath = Paths.get(String.valueOf(testEnv), file.getName());
+                Config childConfig = ConfigFactory.load(String.valueOf(envFilePath));
 //            Config childConfig = ConfigFactory.load(String.format("%s/%s", testEnv, file.getName()));
-            config = config.withFallback(childConfig);
-        }
+                config = config.withFallback(childConfig);
+            }
 
-        return config;
+            return config;
+        }catch(Exception exception){
+            exception.printStackTrace();
+            throw new IllegalStateException("not able to parse config properties");
+        }
     }
 }
