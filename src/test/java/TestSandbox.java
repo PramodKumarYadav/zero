@@ -11,11 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 public class TestSandbox {
-
     @RepeatedTest(10)
     void assertThatWeCanGetUserConfig() {
         final Config CONFIG = TestEnvFactory.getInstance().getConfig();
-
         log.info(TestEnvFactory.getInstance().getConfig().getString("TEST_ENV"));
         log.info(CONFIG.getString("CREATE_EMPLOYEE_ENDPOINT"));
         log.info(CONFIG.getString("ADMIN_NAME"));
