@@ -1,5 +1,11 @@
 name: Alert parent repository on push
-on: workflow_dispatch
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  
+  workflow_dispatch:
 
 jobs:
   dispatch-to-zero:
