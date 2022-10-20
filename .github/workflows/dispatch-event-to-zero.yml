@@ -9,7 +9,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.DOWNSTREAM_JOB_EVENT_TRIGGER_TOKEN }}
+          token: ${{ secrets.REPO_ACCESS_TOKEN_TO_TRIGGER_EVENTS }}
           repository: PramodKumarYadav/zero
           event-type: deployment-completed
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
