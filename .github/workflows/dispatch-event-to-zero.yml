@@ -1,0 +1,16 @@
+name: Alert parent repository on push
+on: push
+
+jobs:
+  dispatch-to-zero:
+    name: Dispatch to `ZERO`
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DOWNSTREAM_JOB_EVENT_TRIGGER_TOKEN }}
+          repository: PramodKumarYadav/zero
+          event-type: deployment-completed
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+   
