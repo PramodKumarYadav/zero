@@ -1,0 +1,16 @@
+name: Alert parent repository on push
+on: push
+
+jobs:
+  dispatch-to-zero:
+    name: Dispatch to `ZERO`
+    runs-on: ubuntu-latest
+    steps:
+      - name: Emit repository_dispatch
+        uses: mvasigh/dispatch-action@main
+        with:
+          # You should create a personal access token and store it in your repository
+          token: ${{ secrets.DOWNSTREAM_JOB_EVENT_TRIGGER_TOKEN }}
+          repo: zero
+          owner: mvasigh
+          event_type: deployment_to_develop_completed
