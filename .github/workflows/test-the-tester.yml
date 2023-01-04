@@ -24,10 +24,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Unlock secrets
-      uses: sliteteam/github-action-git-crypt-unlock@1.2.0
-      env:
-        GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
-        
     - name: Test with Maven
       run: mvn -DexcludedGroups="flaky | failing" -B package --file pom.xml
