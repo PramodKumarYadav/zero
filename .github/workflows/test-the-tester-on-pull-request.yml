@@ -4,7 +4,7 @@
 name: Java CI with Maven
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -28,4 +28,4 @@ jobs:
         GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
 
     - name: Test with Maven
-      run: mvn -DexcludedGroups="flaky | failing"  -Dgroups="" -B package --file pom.xml
+      run: mvn -DexcludedGroups="flaky | failing" -Dgroups=smoke -B package --file pom.xml
