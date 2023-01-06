@@ -10,7 +10,7 @@ on:
       tags-of-tests-to-exclude:
         required: false
         type: string
-        default: "flaky,failing"
+        default: "flaky, failing"
 
 jobs:
   run-tests:
