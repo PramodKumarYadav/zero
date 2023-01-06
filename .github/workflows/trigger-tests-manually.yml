@@ -21,7 +21,7 @@ on:
       tags-of-tests-to-exclude:
         description: 'Tag of tests to exclude'
         required: false
-        default: 'failing'
+        default: ''
         type: choice
         options:
           - ''  # -DexcludedGroups="" means don't exclude any test case
