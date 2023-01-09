@@ -3,7 +3,7 @@
 Zero is our feature rich, core test automation framework, that can be used as an underlying automation framework
 for any/and all kind of test automation frameworks (such as API, Browser, Mobile App).
 
-![build status](https://img.shields.io/github/actions/workflow/status/pramodkumaryadav/zero/test-the-tester.yml?logo=GitHub)
+![build status](https://img.shields.io/github/actions/workflow/status/pramodkumaryadav/zero/trigger-tests-on-pull-request.yml?logo=GitHub)
 ![open issues](https://img.shields.io/github/issues/PramodKumarYadav/zero)
 ![forks](https://img.shields.io/github/forks/PramodKumarYadav/zero)
 ![stars](https://img.shields.io/github/stars/PramodKumarYadav/zero)
@@ -11,6 +11,13 @@ for any/and all kind of test automation frameworks (such as API, Browser, Mobile
 ![languages](https://img.shields.io/github/languages/count/pramodkumaryadav/zero)
 
 ![info](https://img.shields.io/static/v1?label=with-love&message=from-power-tester&color=blue?style=plastic&logo=appveyor)
+
+### Requiring (one time) manual setup by user
+
+1. [JDK 11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html) - as language of choice for writing this test framework.
+2. [Maven 3.8.6+](https://maven.apache.org/) - for project dependency management and running tests in CI. 
+3. [git-crypt](https://dev.to/heroku/how-to-manage-your-secrets-with-git-crypt-56ih) - to encrypt/decrypt secrets. [One time set up instructions here](docs/README-GIT-CRYPT.md).
+
 
 ## Working principles
 
