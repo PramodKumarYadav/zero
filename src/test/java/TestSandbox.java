@@ -3,6 +3,7 @@ import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.powertester.annotations.FailingTest;
 import org.powertester.annotations.FlakyTest;
 import org.powertester.annotations.SmokeTest;
@@ -39,8 +40,12 @@ public class TestSandbox {
     }
 
     @Tag("dumdum")
+    @Test
     void assertThatSpecificTestsForAServiceCanBeRun() {
-        assertTrue(true, "true is true");
+        final Config CONFIG = TestEnvFactory.getInstance().getConfig();
+        final String expectedEnv = CONFIG.getString("TEST_ENV");
+        log.info("running only tests for dumdum tests in test env: {}", expectedEnv);
+        assertEquals(expectedEnv, CONFIG.getString("TEST_ENV"), "TEST_ENV");
     }
 
     @FailingTest
