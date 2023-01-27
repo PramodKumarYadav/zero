@@ -17,8 +17,9 @@ import java.io.IOException;
 @Slf4j
 public class PublishResults {
     private static final Config CONFIG = TestEnvFactory.getInstance().getConfig();
+
     private static final ElasticServerChoices ELASTIC_SERVER = CONFIG.getEnum(ElasticServerChoices.class, "ELASTIC_SERVER");
-    private static final String  ELASTIC_INDEX = CONFIG.getString("ELASTIC_INDEX");
+    private static final String  ELASTIC_INDEX = getStringConfig("ELASTIC_INDEX");
 
     private static final ElasticsearchClient ELASTICSEARCH_CLIENT = getElasticHighLevelRestAPIClient();
 
@@ -42,5 +43,9 @@ public class PublishResults {
 
         // And create the API client
         return new ElasticsearchClient(transport);
+    }
+
+    private static String getStringConfig(String configName) {
+        return CONFIG.getString(ELASTIC_SERVER.getValue() + "." + configName);
     }
 }
