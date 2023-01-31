@@ -22,8 +22,8 @@ import java.time.ZoneId;
 public class TestRunMetaData {
     private static final String PROJECT = "zero";
 
-    private static final String RUN_TIME = LocalDateTime.now().toString();
-    
+    private static final String RUN_TIME = LocalDateTime.now(ZoneId.of("UTC")).toString();
+
     private static final String TRIGGERED_BY = getTriggeredBy();
 
     /**
