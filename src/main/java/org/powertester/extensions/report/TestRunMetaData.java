@@ -22,7 +22,7 @@ public class TestRunMetaData {
     private static final String PROJECT = "zero";
     private static final String RUN_TIME = LocalDateTime.now().toString();
 
-    private static final String TRIGGERED_BY = getTriggeredBy();
+    private static final String USER_NAME = System.getProperty("user.name");
 
     /**
      * Note: Jackson would ignore all above static variables when creating a JSON object to push to Elastic;
@@ -59,7 +59,7 @@ public class TestRunMetaData {
 
         setTestStatusAndReason(context);
 
-        triggeredBy = TRIGGERED_BY;
+        triggeredBy = USER_NAME;
 
         return this;
     }
@@ -82,15 +82,6 @@ public class TestRunMetaData {
         } else {
             status = "✅";
             reason = "🌻";
-        }
-    }
-
-    private static String getTriggeredBy(){
-        Config config = TestEnvFactory.getInstance().getConfig();
-        if(config.getString("TRIGGERED_BY").isEmpty()){
-            return System.getProperty("user.name");
-        }else{
-            return config.getString("TRIGGERED_BY");
         }
     }
 }
