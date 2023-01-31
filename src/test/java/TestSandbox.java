@@ -9,6 +9,9 @@ import org.powertester.annotations.SmokeTest;
 import org.powertester.config.TestEnvFactory;
 import setup.TestSetup;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -37,6 +40,8 @@ public class TestSandbox extends TestSetup {
     @SmokeTest
     void assertThatTrueIsTrue() {
         assertTrue(true, "true is true");
+
+        log.info(LocalDateTime.now(ZoneId.of("UTC")).toString());
     }
 
     @FailingTest
