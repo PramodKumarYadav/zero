@@ -40,8 +40,6 @@ public class TestSandbox extends TestSetup {
     @SmokeTest
     void assertThatTrueIsTrue() {
         assertTrue(true, "true is true");
-
-        log.info(LocalDateTime.now(ZoneId.of("UTC")).toString());
     }
 
     @FailingTest
