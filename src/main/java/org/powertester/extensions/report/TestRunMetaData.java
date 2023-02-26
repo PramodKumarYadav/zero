@@ -2,6 +2,7 @@ package org.powertester.extensions.report;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.javafaker.Faker;
 import com.typesafe.config.Config;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.powertester.config.TestEnvFactory;
 import org.powertester.extensions.TimingExtension;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,18 +22,24 @@ import java.time.LocalDateTime;
 @Data
 public class TestRunMetaData {
     private static final String PROJECT = "zero";
-    private static final String RUN_TIME = LocalDateTime.now().toString();
+    private static final Config CONFIG = TestEnvFactory.getInstance().getConfig();
 
+    private static final String RUN_TIME = LocalDateTime.now(ZoneId.of("UTC")).toString();
+
+    private static final String RUN_NAME = getRunName();
     private static final String TRIGGERED_BY = getTriggeredBy();
 
     /**
      * Note: Jackson would ignore all above static variables when creating a JSON object to push to Elastic;
      * and will only consider below "fields" to create a Json data to publish.
-     * */
+     */
     private String project;
 
-    @JsonProperty("test-run")
-    private String testRun;
+    @JsonProperty("run-time")
+    private String runTime;
+
+    @JsonProperty("run-name")
+    private String runName;
 
     @JsonProperty("test-class")
     private String testClass;
@@ -50,7 +58,9 @@ public class TestRunMetaData {
 
     public TestRunMetaData setBody(ExtensionContext context) {
         project = PROJECT;
-        testRun = RUN_TIME;
+
+        runTime = RUN_TIME;
+        runName = RUN_NAME;
 
         testClass = context.getTestClass().orElseThrow().getSimpleName();
         testName = context.getDisplayName();
@@ -65,32 +75,39 @@ public class TestRunMetaData {
     }
 
     private void setDuration() {
-        if(TimingExtension.getTestExecutionTimeThread() >= 5){
-            duration =  TimingExtension.getTestExecutionTimeThread() + " ⏰";
-        }else{
+        if (TimingExtension.getTestExecutionTimeThread() >= 5) {
+            duration = TimingExtension.getTestExecutionTimeThread() + " ⏰";
+        } else {
             duration = String.valueOf(TimingExtension.getTestExecutionTimeThread());
         }
 
-        log.info("duration {}" , duration);
+        log.info("duration {}", duration);
     }
 
     private void setTestStatusAndReason(ExtensionContext context) {
         boolean testStatus = context.getExecutionException().isPresent();
         if (testStatus) {
             status = "❌";
-            reason =  "🐞 " + context.getExecutionException().toString();
+            reason = "🐞 " + context.getExecutionException().toString();
         } else {
             status = "✅";
             reason = "🌻";
         }
     }
 
-    private static String getTriggeredBy(){
-       Config config = TestEnvFactory.getInstance().getConfig();
-       if(config.getString("TRIGGERED_BY").isEmpty()){
-           return System.getProperty("user.name");
-       }else{
-           return config.getString("TRIGGERED_BY");
-       }
+    private static String getTriggeredBy() {
+        if (CONFIG.getString("TRIGGERED_BY").isEmpty()) {
+            return System.getProperty("user.name");
+        } else {
+            return CONFIG.getString("TRIGGERED_BY");
+        }
+    }
+
+    private static String getRunName() {
+        if (CONFIG.getString("RUN_NAME").isEmpty()) {
+            return Faker.instance().funnyName().name();
+        } else {
+            return CONFIG.getString("RUN_NAME");
+        }
     }
 }
