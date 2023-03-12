@@ -12,9 +12,6 @@ import org.powertester.annotations.SmokeTest;
 import org.powertester.config.TestEnvFactory;
 import setup.TestSetup;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 @Slf4j
 public class TestSandbox extends TestSetup {
   @RepeatedTest(10)
