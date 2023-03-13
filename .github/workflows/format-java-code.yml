@@ -1,6 +1,8 @@
 name: Format Java Code as per Google Java Format program
 
-on: [ push, pull_request ]
+on:
+  pull_request:
+    branches: [ main ]
 
 jobs:
 
