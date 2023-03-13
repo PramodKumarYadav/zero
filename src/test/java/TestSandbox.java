@@ -60,6 +60,4 @@ public class TestSandbox extends TestSetup {
       assertTrue(true, "time is even");
     } else {
       assertTrue(false, "time is odd");
-    }
-  }
-}
+    } }}
