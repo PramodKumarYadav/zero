@@ -12,5 +12,7 @@ jobs:
         with:
           args: "--replace"
           skip-commit: true
+
       - name: Print diffs
+        echo: "Please follow instructions on readme file Setup step in install pre-commit hooks to resolve this error"
         run: git --no-pager diff --exit-code
