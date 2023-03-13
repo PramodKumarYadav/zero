@@ -3,6 +3,10 @@ repos:
       rev: v4.4.0
       hooks:
         -   id: check-yaml
+        -   id: check-json
+        -   id: check-xml
+        -   id: mixed-line-ending
+        -   id: pretty-format-json
         -   id: end-of-file-fixer
         -   id: trailing-whitespace
 
