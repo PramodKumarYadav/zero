@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.powertester.annotations.FailingTest;
 import org.powertester.annotations.FlakyTest;
@@ -50,6 +51,7 @@ public class TestSandbox extends TestSetup {
     assertEquals("day", "night", "true is true");
   }
 
+  @DisplayName("flaky test")
   @FlakyTest
   void createAFlakyTestCase() {
     long currentTimeStamp = System.currentTimeMillis();
