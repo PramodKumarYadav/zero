@@ -62,4 +62,13 @@ public class TestSandbox extends TestSetup {
       assertTrue(false, "time is odd");
     }
   }
+
+
+  @SmokeTest
+  void
+  assertThatTrueIsTrue2() {
+    assertTrue(true, "true is true");
+  }
+
+  
 }
