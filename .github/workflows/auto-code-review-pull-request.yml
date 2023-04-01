@@ -18,11 +18,11 @@ jobs:
           java-version: '11'
 
       - name: Start SonarQube server
-        uses: pmenage/docker-compose-action@v1
-        with:
-          compose-file: docker-compose.yml
-          service-name: sonarqube
-          run: up -d
+        run: |
+          docker-compose up -d sonarqube
+          echo "Waiting for SonarQube server to start..."
+          while ! curl -sSf http://localhost:9000; do sleep 1; done
+          echo "SonarQube server started!"
 
       - name: Analyze code changes with SonarQube
         run: |
@@ -40,11 +40,7 @@ jobs:
             -Dsonar.qualitygate.wait=true
 
       - name: Stop SonarQube server
-        uses: pmenage/docker-compose-action@v1
-        with:
-          compose-file: docker-compose.yml
-          service-name: sonarqube
-          run: down
+        run: docker-compose down
 
       - name: Post feedback on pull request
         uses: unsplash/comment-on-pr@v1.3.1
