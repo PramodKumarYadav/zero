@@ -48,11 +48,11 @@ jobs:
           report_path: report.json
           # The message parameter is no longer needed because we're posting feedback inline
 
-      - name: Post inline comments on files
-        uses: unsplash/post-sonarqube-comments@v1.3.1
-        with:
-          report_path: report.json
-          # The following parameters will determine the format of the inline comments
-          include_file_path: true
-          include_issue_description: true
-          include_rule_description: true
+#      - name: Post inline comments on files
+#        uses: unsplash/post-sonarqube-comments@v1.3.1
+#        with:
+#          report_path: report.json
+#          # The following parameters will determine the format of the inline comments
+#          include_file_path: true
+#          include_issue_description: true
+#          include_rule_description: true
