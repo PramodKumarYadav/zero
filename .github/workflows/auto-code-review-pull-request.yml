@@ -19,30 +19,27 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Start SonarQube server
-        run: |
-          docker-compose up -d sonarqube
-          echo "Waiting for SonarQube server to start..."
-          while ! curl -sSf http://localhost:9000; do sleep 1; done
-          echo "SonarQube server started!"
+      # Triggering SonarQube analysis as results of it are required by Quality Gate check.
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONAR_HOST_URL: "https://sonarcloud.io/project/overview?id=PramodKumarYadav_zero"
 
-      - name: Analyze code changes with SonarQube
-        run: |
-          # Analyze the code changes in the pull request using SonarQube
-          sonar-scanner \
-            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }} \
-            -Dsonar.host.url=http://localhost:9000 \
-            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
-            -Dsonar.pullrequest.branch=${{ github.event.pull_request.head.ref }} \
-            -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
-            -Dsonar.analysis.mode=preview \
-            -Dsonar.issuesReport.console.enable=true \
-            -Dsonar.inline.mode=diff \
-            -Dsonar.report.export.path=report.json \
-            -Dsonar.qualitygate.wait=true
-
-      - name: Stop SonarQube server
-        run: docker-compose down
+#      - name: Analyze code changes with SonarQube
+#        run: |
+#          # Analyze the code changes in the pull request using SonarQube
+#          sonar-scanner \
+#            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }} \
+#            -Dsonar.host.url=http://localhost:9000 \
+#            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+#            -Dsonar.pullrequest.branch=${{ github.event.pull_request.head.ref }} \
+#            -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
+#            -Dsonar.analysis.mode=preview \
+#            -Dsonar.issuesReport.console.enable=true \
+#            -Dsonar.inline.mode=diff \
+#            -Dsonar.report.export.path=report.json \
+#            -Dsonar.qualitygate.wait=true
 
       - name: Post feedback on pull request
         uses: unsplash/comment-on-pr@v1.3.1
