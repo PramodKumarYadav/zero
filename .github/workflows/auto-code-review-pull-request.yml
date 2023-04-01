@@ -47,13 +47,13 @@ jobs:
           run: down
 
       - name: Post feedback on pull request
-        uses: unsplash/comment-on-pr@v1
+        uses: unsplash/comment-on-pr@v1.3.1
         with:
           report_path: report.json
           # The message parameter is no longer needed because we're posting feedback inline
 
       - name: Post inline comments on files
-        uses: unsplash/post-sonarqube-comments@v1
+        uses: unsplash/post-sonarqube-comments@v1.3.1
         with:
           report_path: report.json
           # The following parameters will determine the format of the inline comments
