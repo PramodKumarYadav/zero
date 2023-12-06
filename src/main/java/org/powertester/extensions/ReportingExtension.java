@@ -20,6 +20,8 @@ public class ReportingExtension implements AfterEachCallback {
       log.info("publishing results to elastic");
       TestRunMetaData testRunMetaData = new TestRunMetaData().setBody(context);
       PublishResults.toElastic(testRunMetaData);
+    } else {
+      log.info("Skipping publishing results to console since PUBLISH_RESULTS_TO_ELASTIC=false");
     }
   }
 }
