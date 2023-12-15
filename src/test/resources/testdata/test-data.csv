@@ -1,0 +1,3 @@
+SCENARIO: META, TEST_NAME: META, AMOUNT: IN, DATE: $OUT
+STATIC DATA, test static data,100, 2019-01-01
+DYNAMIC DATA, test dynamic data,4, yesterday
