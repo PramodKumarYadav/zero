@@ -1,3 +1,4 @@
 SCENARIO: META, TEST_NAME: META, AMOUNT: IN, DATE: $OUT
+EMPTY DATA, test with empty data,, yesterday
 STATIC DATA, test static data,100, 2019-01-01
 DYNAMIC DATA, test dynamic data,4, yesterday
