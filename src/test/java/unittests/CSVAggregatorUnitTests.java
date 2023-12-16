@@ -13,7 +13,6 @@ class CSVAggregatorUnitTests {
   @CsvFileSource(files = "src/test/resources/testdata/test-data.csv", numLinesToSkip = 1)
   void parseCSVToTestDataMap(@CSVToTestDataMap TestData testData) {
     // Add your test here
-    //    assertEquals("Common comment", testData.getValue("COMMENT"));
     assertAll(
         () -> assertEquals("Common comment", testData.getValue("COMMENT")),
         () -> assertEquals("META", testData.getType("COMMENT")));
