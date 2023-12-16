@@ -25,7 +25,7 @@ public class TestEnvFactory {
 
   private TestEnvFactory() {
     // Set MDC context
-    MDC.put("testName", "testConfig");
+    MDC.put("testContext", "testConfig");
     config = setConfig();
     MDC.clear();
   }

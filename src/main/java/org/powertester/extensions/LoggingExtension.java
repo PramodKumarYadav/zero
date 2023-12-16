@@ -8,8 +8,8 @@ import org.slf4j.MDC;
 public class LoggingExtension implements BeforeEachCallback, AfterEachCallback {
   @Override
   public void beforeEach(ExtensionContext context) {
-    // Set MDC context "testName" to the test name
-    MDC.put("testName", context.getDisplayName());
+    // Set MDC context "testContext" to the test name
+    MDC.put("testContext", context.getDisplayName());
   }
 
   @Override

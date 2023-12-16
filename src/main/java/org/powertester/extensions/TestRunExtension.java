@@ -24,7 +24,7 @@ public class TestRunExtension
     try {
       if (isTestRunStarted.compareAndSet(false, true)) {
         // Set MDC context
-        MDC.put("testName", "testRun");
+        MDC.put("testContext", "testRun");
 
         log.info("Run this section only once at the beginning of the whole test run.");
         context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put("TestRunExtension", this);
