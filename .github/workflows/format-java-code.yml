@@ -14,7 +14,7 @@ jobs:
         with:
           args: "--replace"
           skip-commit: true
-          java-version: "17"
+          version: "1.17"
 
       - name: Print diffs
         run: |
