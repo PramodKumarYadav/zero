@@ -1,6 +1,6 @@
 package org.powertester.data;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +17,8 @@ public class TestData {
   }
 
   public TestData() {
-    this.headerValueMap = new HashMap<>();
-    this.headerTypeMap = new HashMap<>();
+    this.headerValueMap = new LinkedHashMap<>();
+    this.headerTypeMap = new LinkedHashMap<>();
   }
 
   public TestData setValueToKeys(String value, String... keys) {
