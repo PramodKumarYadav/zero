@@ -13,13 +13,10 @@ public class TagsFactory {
       return NumberFactory.getNumberForTag(tag);
     }
 
-    String dynamicValue =
-        switch (tag.toLowerCase(Locale.ROOT)) {
-          case "guid" -> String.valueOf(UUID.randomUUID());
-          case "today", "tomorrow", "yesterday" -> String.valueOf(DateFactory.getDateForTag(tag));
-          default -> tag;
-        };
-
-    return dynamicValue;
+    return switch (tag.toLowerCase(Locale.ROOT)) {
+      case "guid" -> String.valueOf(UUID.randomUUID());
+      case "today", "tomorrow", "yesterday" -> String.valueOf(DateFactory.getDateForTag(tag));
+      default -> tag;
+    };
   }
 }
