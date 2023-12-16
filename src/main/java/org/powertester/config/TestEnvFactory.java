@@ -5,6 +5,7 @@ import com.typesafe.config.ConfigFactory;
 import java.io.File;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 /**
  * Env configuration once loaded, is to remain constant for all classes using it. Thus we will
@@ -23,7 +24,10 @@ public class TestEnvFactory {
   private Config config;
 
   private TestEnvFactory() {
+    // Set MDC context
+    MDC.put("testName", "testConfig");
     config = setConfig();
+    MDC.clear();
   }
 
   public static TestEnvFactory getInstance() {
