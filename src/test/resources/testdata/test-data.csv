@@ -1,4 +1,4 @@
-SR_NR: META, SCENARIO: META, TEST_NAME, AMOUNT:$IN, DATE : $IN, EXPECTED_RESULT:META, FUTURE_DATE: $OUT, BALANCE: $INOUT
-1, STATIC DATA, test static data,3digits, 2019-01-01, 1232, today, 3digits
-2, DYNAMIC DATA, test dynamic data, , yesterday,, yesterday, 3digits
-3, EMPTY DATA, test with empty data,2digits, today, "    ", today, 2digits
+SR_NR: META, SCENARIO: META, TEST_NAME, AMOUNT:$IN, DATE : $IN, EXPECTED_RESULT:META, FUTURE_DATE: $OUT, BALANCE: $INOUT , COMMENT: META
+1, STATIC DATA, test static data,3digits, 2019-01-01, 1232, today, 3digits, Common comment
+2, DYNAMIC DATA, test dynamic data, , yesterday,, yesterday, 3digits  , Common comment
+3, EMPTY DATA, test with empty data,2digits, today, "    ", today, 2digits     , Common comment
