@@ -7,10 +7,10 @@ import org.powertester.annotations.CSVToTestDataMap;
 import org.powertester.data.TestData;
 
 @Slf4j
-class CSVToTestDataAggregatorUnitTests {
+class CSVAggregatorUnitTests {
 
   @ParameterizedTest(name = "Test data: {0}")
-  @CsvFileSource(resources = "/testdata/test-data.csv", numLinesToSkip = 1)
+  @CsvFileSource(files = "src/test/resources/testdata/test-data.csv", numLinesToSkip = 1)
   void parseCSVToTestDataMap(@CSVToTestDataMap TestData testData) {
     //    log.info(testData.getHeaderValueMap().toString());
     //    log.info(testData.getHeaderTypeMap().toString());

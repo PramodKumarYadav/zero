@@ -1,4 +1,4 @@
-package org.powertester.utils;
+package org.powertester.factories;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,9 +10,9 @@ import java.util.function.Supplier;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class DateUtils {
+public class DateFactory {
 
-  private DateUtils() {
+  private DateFactory() {
     throw new IllegalStateException("Utility class");
   }
 
@@ -28,7 +28,7 @@ public class DateUtils {
 
   public static LocalDate getDateForTag(String tag) {
     Supplier<LocalDate> dateSupplier = DATE_TAGS.get(tag.toLowerCase());
-    log.info("Date supplier for tag '{}' is: {}", tag, dateSupplier.get());
+    log.debug("Date supplier for tag '{}' is: {}", tag, dateSupplier.get());
     if (dateSupplier.get() != null) {
       return dateSupplier.get();
     } else {

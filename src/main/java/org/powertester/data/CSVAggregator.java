@@ -10,13 +10,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.aggregator.ArgumentsAggregator;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.powertester.config.TestEnvFactory;
+import org.powertester.factories.TagsFactory;
 
 /**
  * 1. Trim Headers ✅. 2. Trim Values ✅. 3. Trim Types ✅. 4. Don't add headers with empty values ✅.
@@ -26,7 +26,7 @@ import org.powertester.config.TestEnvFactory;
  * fixed static values (01-01-2021) or amount 1.01. 7. Return object as a TestData object ✅.
  */
 @Slf4j
-public class CSVToTestDataAggregator implements ArgumentsAggregator {
+public class CSVAggregator implements ArgumentsAggregator {
   private static final Config CONFIG = TestEnvFactory.getInstance().getConfig();
   private static final String CSV_DELIMITER = CONFIG.getString("CSV_DELIMITER");
   private final AtomicBoolean isFileRead = new AtomicBoolean(false);
@@ -52,13 +52,13 @@ public class CSVToTestDataAggregator implements ArgumentsAggregator {
       ParameterContext context) {
     if (isFileRead.compareAndSet(false, true)) {
       Path csvFilePath =
-          Path.of(
-              context.getDeclaringExecutable().getAnnotation(CsvFileSource.class).resources()[0]);
+          Path.of(context.getDeclaringExecutable().getAnnotation(CsvFileSource.class).files()[0]);
+      log.debug("Reading CSV file: {}", csvFilePath.toAbsolutePath());
       try {
         List<String> rawHeadersIncludingMetadata =
             Arrays.stream(Files.readAllLines(csvFilePath).get(0).split(CSV_DELIMITER))
                 .map(String::trim)
-                .collect(Collectors.toList());
+                .toList();
         rawHeaders.addAll(rawHeadersIncludingMetadata);
       } catch (IOException exception) {
         exception.printStackTrace();

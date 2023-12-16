@@ -5,9 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.junit.jupiter.params.aggregator.AggregateWith;
-import org.powertester.data.CSVToTestDataAggregator;
+import org.powertester.data.CSVAggregator;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-@AggregateWith(CSVToTestDataAggregator.class)
+@AggregateWith(CSVAggregator.class)
 public @interface CSVToTestDataMap {}
