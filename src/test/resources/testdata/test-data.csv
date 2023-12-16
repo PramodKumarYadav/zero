@@ -1,4 +1,4 @@
-SCENARIO, TEST_NAME, AMOUNT:$IN, DATE : $IN, EXPECTED_RESULT:META, FUTURE_DATE: $OUT
-STATIC DATA, test static data,3digits, 2019-01-01, 1232, today
-DYNAMIC DATA, test dynamic data, , yesterday,, yesterday
-EMPTY DATA, test with empty data,2digits, today, "    ", today
+SCENARIO: META, TEST_NAME, AMOUNT:$IN, DATE : $IN, EXPECTED_RESULT:META, FUTURE_DATE: $OUT, BALANCE: $INOUT
+STATIC DATA, test static data,3digits, 2019-01-01, 1232, today, 3digits
+DYNAMIC DATA, test dynamic data, , yesterday,, yesterday, 3digits
+EMPTY DATA, test with empty data,2digits, today, "    ", today, 2digits

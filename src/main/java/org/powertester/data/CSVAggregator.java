@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -31,10 +31,10 @@ public class CSVAggregator implements ArgumentsAggregator {
   private static final String CSV_DELIMITER = CONFIG.getString("CSV_DELIMITER");
   private final AtomicBoolean isFileRead = new AtomicBoolean(false);
   private final List<String> rawHeaders = new ArrayList<>();
-  private final Map<String, String> originalCSVMap = new HashMap<>();
-  private final Map<String, String> headerValueMap = new HashMap<>();
-  private final Map<String, String> headerTypeMap = new HashMap<>();
-  private final Map<String, String> tagValueMap = new HashMap<>();
+  private final Map<String, String> originalCSVMap = new LinkedHashMap<>();
+  private final Map<String, String> headerValueMap = new LinkedHashMap<>();
+  private final Map<String, String> headerTypeMap = new LinkedHashMap<>();
+  private final Map<String, String> tagValueMap = new LinkedHashMap<>();
 
   @Override
   public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) {
