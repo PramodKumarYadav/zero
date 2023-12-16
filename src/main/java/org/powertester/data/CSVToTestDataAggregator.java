@@ -30,82 +30,66 @@ public class CSVToTestDataAggregator implements ArgumentsAggregator {
   private static final Config CONFIG = TestEnvFactory.getInstance().getConfig();
   private static final String CSV_DELIMITER = CONFIG.getString("CSV_DELIMITER");
   private final AtomicBoolean isFileRead = new AtomicBoolean(false);
-  private List<String> headers = new ArrayList<>();
-  private Map<String, String> headerTypeMap = new HashMap<>();
-  private Map<String, String> headerValueMap = new HashMap<>();
-  private Map<String, String> tagValueMap = new HashMap<>();
+  private final List<String> rawHeaders = new ArrayList<>();
+  private final Map<String, String> originalCSVMap = new HashMap<>();
+  private final Map<String, String> headerValueMap = new HashMap<>();
+  private final Map<String, String> headerTypeMap = new HashMap<>();
+  private final Map<String, String> tagValueMap = new HashMap<>();
 
   @Override
   public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) {
-    readFileOnlyOnceAndSetNonEmptyHeaders(accessor, context);
-    setHeaderValueMap(accessor);
+    readCSVFileAndSetHeadersOnlyOnceForTheWholeParameterizedTest(context);
+    convertCSVToMap(accessor, rawHeaders);
+    setHeaderTypeAndValueMapsForNonEmptyValues();
     setHeaderValueMapForDynamicValues();
 
+    log.info("HeaderValueMap: {}", headerValueMap);
+    log.info("HeaderTypeMap: {}", headerTypeMap);
     return new TestData(headerValueMap, headerTypeMap);
   }
 
-  private void readFileOnlyOnceAndSetNonEmptyHeaders(
-      ArgumentsAccessor accessor, ParameterContext context) {
+  private void readCSVFileAndSetHeadersOnlyOnceForTheWholeParameterizedTest(
+      ParameterContext context) {
     if (isFileRead.compareAndSet(false, true)) {
-      Path csvFilePath = getCSVFilePath(context);
-
-      List<String> rawHeaders = getHeadersFromFirstRowOfCSVFile(csvFilePath);
-
-      List<String> rawHeadersWithNonEmptyValues =
-          getHeadersWithNonEmptyValues(accessor, rawHeaders);
-
-      setHeadersAndTypes(rawHeadersWithNonEmptyValues);
-
-      log.debug("Headers: {}", headers);
-      log.debug("Header Types: {}", headerTypeMap);
-    }
-  }
-
-  private Path getCSVFilePath(ParameterContext context) {
-    return Path.of(
-        context.getDeclaringExecutable().getAnnotation(CsvFileSource.class).resources()[0]);
-  }
-
-  private List<String> getHeadersFromFirstRowOfCSVFile(Path csvFilePath) {
-    try {
-      return Arrays.stream(Files.readAllLines(csvFilePath).get(0).split(CSV_DELIMITER))
-          .map(String::trim)
-          .collect(Collectors.toList());
-    } catch (IOException e) {
-      e.printStackTrace();
-      throw new IllegalStateException("Exception while reading CSV file: " + csvFilePath);
-    }
-  }
-
-  private static List<String> getHeadersWithNonEmptyValues(
-      ArgumentsAccessor accessor, List<String> rawHeaders) {
-    return rawHeaders.stream()
-        .filter(header -> accessor.getString(rawHeaders.indexOf(header)) != null)
-        .filter(header -> !accessor.getString(rawHeaders.indexOf(header)).isEmpty())
-        .collect(Collectors.toList());
-  }
-
-  private void setHeadersAndTypes(List<String> rawHeaders) {
-    for (String rawHeader : rawHeaders) {
-      String[] headerAndType = rawHeader.split(":");
-      String header = headerAndType[0].trim();
-      String type = headerAndType.length > 1 ? headerAndType[1].trim() : "DEFAULT";
-      if (header.isEmpty()) {
-        continue;
+      Path csvFilePath =
+          Path.of(
+              context.getDeclaringExecutable().getAnnotation(CsvFileSource.class).resources()[0]);
+      try {
+        List<String> rawHeadersIncludingMetadata =
+            Arrays.stream(Files.readAllLines(csvFilePath).get(0).split(CSV_DELIMITER))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        rawHeaders.addAll(rawHeadersIncludingMetadata);
+      } catch (IOException exception) {
+        exception.printStackTrace();
+        throw new IllegalStateException("Exception while reading CSV file: " + csvFilePath);
       }
-      headers.add(header);
-      headerTypeMap.put(header, type);
     }
   }
 
-  private void setHeaderValueMap(ArgumentsAccessor accessor) {
+  private void convertCSVToMap(ArgumentsAccessor accessor, List<String> rawHeaders) {
+    rawHeaders.forEach(
+        header -> {
+          String value = accessor.getString(rawHeaders.indexOf(header));
+          originalCSVMap.put(header, value);
+        });
+  }
 
-    headers.stream()
-        .filter(header -> accessor.getString(headers.indexOf(header)) != null)
+  private void setHeaderTypeAndValueMapsForNonEmptyValues() {
+    originalCSVMap
+        .keySet()
         .forEach(
-            header -> {
-              String value = accessor.getString(headers.indexOf(header)).trim();
-              headerValueMap.put(header, value);
+            rawHeader -> {
+              String[] headerAndType = rawHeader.split(":");
+
+              String headerName = headerAndType[0].trim();
+              String type = headerAndType.length > 1 ? headerAndType[1].trim() : "DEFAULT";
+              String value =
+                  originalCSVMap.get(rawHeader) != null ? originalCSVMap.get(rawHeader).trim() : "";
+              if (!value.isEmpty()) {
+                headerValueMap.put(headerName, value);
+                headerTypeMap.put(headerName, type);
+              }
             });
   }
 
@@ -115,8 +99,9 @@ public class CSVToTestDataAggregator implements ArgumentsAggregator {
         .forEach(
             header -> {
               String tag = headerValueMap.get(header);
-              headerValueMap.put(
-                  header, tagValueMap.computeIfAbsent(tag, value -> TagsFactory.getValueFor(tag)));
+              String dynamicValue =
+                  tagValueMap.computeIfAbsent(tag, value -> TagsFactory.getValueFor(tag));
+              headerValueMap.put(header, dynamicValue);
             });
   }
 }

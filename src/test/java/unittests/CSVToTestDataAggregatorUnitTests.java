@@ -12,6 +12,7 @@ class CSVToTestDataAggregatorUnitTests {
   @ParameterizedTest(name = "Test data: {0}")
   @CsvFileSource(resources = "/testdata/test-data.csv", numLinesToSkip = 1)
   void parseCSVToTestDataMap(@CSVToTestDataMap TestData testData) {
-    log.info(testData.getHeaderValueMap().toString());
+    //    log.info(testData.getHeaderValueMap().toString());
+    //    log.info(testData.getHeaderTypeMap().toString());
   }
 }

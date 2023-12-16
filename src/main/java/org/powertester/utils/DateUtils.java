@@ -4,11 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class DateUtils {
 
   private DateUtils() {
@@ -20,14 +21,15 @@ public class DateUtils {
   static {
     DATE_TAGS = new HashMap<>();
     DATE_TAGS.put("today", LocalDate::now);
-    DATE_TAGS.put("tomorrow", () -> LocalDate.now().plus(1, ChronoUnit.DAYS));
-    DATE_TAGS.put("yesterday", () -> LocalDate.now().minus(1, ChronoUnit.DAYS));
+    DATE_TAGS.put("tomorrow", () -> LocalDate.now().plusDays(1));
+    DATE_TAGS.put("yesterday", () -> LocalDate.now().minusDays(1));
     // Add more tags as needed
   }
 
   public static LocalDate getDateForTag(String tag) {
     Supplier<LocalDate> dateSupplier = DATE_TAGS.get(tag.toLowerCase());
-    if (dateSupplier != null) {
+    log.info("Date supplier for tag '{}' is: {}", tag, dateSupplier.get());
+    if (dateSupplier.get() != null) {
       return dateSupplier.get();
     } else {
       // Handle custom date or invalid tag
