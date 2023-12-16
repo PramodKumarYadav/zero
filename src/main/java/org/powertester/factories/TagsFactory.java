@@ -1,6 +1,5 @@
 package org.powertester.factories;
 
-import java.util.Locale;
 import java.util.UUID;
 
 public class TagsFactory {
@@ -13,7 +12,7 @@ public class TagsFactory {
       return NumberFactory.getNumberForTag(tag);
     }
 
-    return switch (tag.toLowerCase(Locale.ROOT)) {
+    return switch (tag.toLowerCase()) {
       case "guid" -> String.valueOf(UUID.randomUUID());
       case "today", "tomorrow", "yesterday" -> String.valueOf(DateFactory.getDateForTag(tag));
       default -> tag;
