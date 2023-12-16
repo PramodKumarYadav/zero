@@ -14,6 +14,7 @@ jobs:
         with:
           args: "--replace"
           skip-commit: true
+          version: "v1.17.0"
 
       - name: Print diffs
         run: |
