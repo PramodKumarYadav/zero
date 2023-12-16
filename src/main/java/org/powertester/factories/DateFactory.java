@@ -42,10 +42,10 @@ public class DateFactory {
   }
 
   public static void main(String[] args) {
-    System.out.println("Today: " + getDateForTag("today"));
-    System.out.println("Tomorrow: " + getDateForTag("tomorrow"));
-    System.out.println("Yesterday: " + getDateForTag("yesterday"));
-    System.out.println("Custom Date (2023-12-15): " + getDateForTag("2023-12-15"));
+    log.debug("Today: " + getDateForTag("today"));
+    log.debug("Tomorrow: " + getDateForTag("tomorrow"));
+    log.debug("Yesterday: " + getDateForTag("yesterday"));
+    log.debug("Custom Date (2023-12-15): " + getDateForTag("2023-12-15"));
   }
 
   public static String getDateAsString(String format) {
