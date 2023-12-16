@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.slf4j.MDC;
 
 @Slf4j
 public class TestRunExtension
@@ -22,6 +23,9 @@ public class TestRunExtension
   public void beforeAll(ExtensionContext context) {
     try {
       if (isTestRunStarted.compareAndSet(false, true)) {
+        // Set MDC context
+        MDC.put("testName", "testRun");
+
         log.info("Run this section only once at the beginning of the whole test run.");
         context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL).put("TestRunExtension", this);
 
@@ -45,5 +49,8 @@ public class TestRunExtension
 
     // Close your database connection pool here.
     // DBConnectionPool.getInstance().close();
+
+    // Clear MDC after test
+    MDC.clear();
   }
 }
