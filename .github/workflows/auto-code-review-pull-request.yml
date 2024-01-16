@@ -1,0 +1,57 @@
+name: SonarQube Code Review
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      # Triggering SonarQube analysis as results of it are required by Quality Gate check.
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONAR_HOST_URL: "https://sonarcloud.io/project/overview?id=PramodKumarYadav_zero"
+
+#      - name: Analyze code changes with SonarQube
+#        run: |
+#          # Analyze the code changes in the pull request using SonarQube
+#          sonar-scanner \
+#            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }} \
+#            -Dsonar.host.url=http://localhost:9000 \
+#            -Dsonar.pullrequest.key=${{ github.event.pull_request.number }} \
+#            -Dsonar.pullrequest.branch=${{ github.event.pull_request.head.ref }} \
+#            -Dsonar.pullrequest.base=${{ github.event.pull_request.base.ref }} \
+#            -Dsonar.analysis.mode=preview \
+#            -Dsonar.issuesReport.console.enable=true \
+#            -Dsonar.inline.mode=diff \
+#            -Dsonar.report.export.path=report.json \
+#            -Dsonar.qualitygate.wait=true
+
+      - name: Post feedback on pull request
+        uses: unsplash/comment-on-pr@v1.3.1
+        with:
+          report_path: report.json
+          # The message parameter is no longer needed because we're posting feedback inline
+
+#      - name: Post inline comments on files
+#        uses: unsplash/post-sonarqube-comments@v1.3.1
+#        with:
+#          report_path: report.json
+#          # The following parameters will determine the format of the inline comments
+#          include_file_path: true
+#          include_issue_description: true
+#          include_rule_description: true

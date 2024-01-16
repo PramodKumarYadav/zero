@@ -50,4 +50,4 @@ jobs:
           -DTEST_ENV="${{ inputs.test-environment }}"
           -DTRIGGERED_BY="${{ github.event_name }}"
           -DRUN_NAME="${{ inputs.run-name }}"
-          -B package --file pom.xml
+          clean -B package --file pom.xml
